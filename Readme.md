@@ -79,3 +79,7 @@ wget -q -S -O - --header='user_id:99' localhost:8080/RemoveFavouritePokemonToTra
 ```
 wget -O- localhost:8080/getPokemonDetailsByID/1
 ```
+
+
+
+docker-compose up -d 
