@@ -1,13 +1,19 @@
 package trainers.trainer.domain;
 
+import shared.DomainEvent;
 import trainers.trainer.domain.exceptions.PokemonAlreadyExistInFavouritePokemonsException;
 import trainers.trainer.domain.exceptions.PokemonNotExistInFavouritePokemonsException;
+
+import java.util.ArrayList;
 
 public class Trainer {
     private final TrainerID ID;
     private final FavouritePokemons favoritePokemons;
 
+    private ArrayList<DomainEvent> events;
+
     public Trainer(TrainerID ID) {
+        events = new ArrayList<>();
         this.ID = ID;
         this.favoritePokemons = new FavouritePokemons();
     }
@@ -18,6 +24,7 @@ public class Trainer {
 
     public void addFavouritePokemon(PokemonID pokemonID) throws PokemonAlreadyExistInFavouritePokemonsException {
         favoritePokemons.addFavouritePokemon(pokemonID);
+        events.add(new AddedFavouritePokemonEvent(ID.ID(), pokemonID.ID()));
     }
 
     public void removeFavouritePokemon(PokemonID pokemonID) throws PokemonNotExistInFavouritePokemonsException {
@@ -28,4 +35,9 @@ public class Trainer {
         return favoritePokemons.pokemonExist(pokemonID);
     }
 
+    ArrayList<DomainEvent> pullDomainEvents() {
+        var recordedEvents = events;
+        events = new ArrayList<>();
+        return recordedEvents;
+    }
 }
