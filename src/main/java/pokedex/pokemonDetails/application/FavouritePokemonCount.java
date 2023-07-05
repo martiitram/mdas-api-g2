@@ -1,18 +1,18 @@
 package pokedex.pokemonDetails.application;
 
+import pokedex.pokemonDetails.domain.FavouriteCountRepository;
+import pokedex.pokemonDetails.domain.PokemonID;
+import pokedex.pokemonDetails.domain.exceptions.PokemonIdOutOfRangeException;
+
 public class FavouritePokemonCount {
+    private final FavouriteCountRepository favouriteCountRepository;
+    public FavouritePokemonCount(FavouriteCountRepository favouriteCountRepository){
 
-    public FavouritePokemonCount(){
-
+        this.favouriteCountRepository = favouriteCountRepository;
     }
 
-    public void modify(int pokemonId, int countModifier){
-        System.out.println("estem modificant el contadoir del pokemon ");
-        System.out.print(pokemonId);
-        System.out.print(" en ");
-        System.out.print(pokemonId);
-
-
+    public void modify(int pokemonId, int countModifier) throws PokemonIdOutOfRangeException {
+        favouriteCountRepository.modify(new PokemonID(pokemonId),countModifier);
     }
 
 }

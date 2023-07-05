@@ -13,33 +13,36 @@ import pokedex.pokemonDetails.domain.exceptions.*;
 public class GetPokemonDetailsWithHttp {
     @GetMapping("getPokemonDetailsByID/{pokemonID}")
     public static String getPokemonDetailsByID(@PathVariable int pokemonID) {
-        var getPokemonDetails = new GetPokemonDetails(new PokeApiPokemonDetailRepository());
+        var getPokemonDetails = new GetPokemonDetails(new PokeApiPokemonDetailRepository(new InMemoryFavouriteCountRepository()));
         try {
             PokemonDetail pokemonTypeCollection = getPokemonDetails.execute(pokemonID);
             return transformToJSON(pokemonTypeCollection);
         } catch (PokemonNameNotEmptyException |
                  PokemonNegativeHeightException | PokemonIdOutOfRangeException | PokemonNegativeWeightException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"InvalidPokemonData");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "InvalidPokemonData");
 
         } catch (PokemonNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,e.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (PokemonDetailRepositoryConnectionException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"ConnectionError");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "ConnectionError");
         }
     }
+
     private static String transformToJSON(PokemonDetail pokemonTypeCollection) {
         return String.format("""
                         {
                             "id":"%d",
                             "name":"%s",
                             "height":"%G",
-                            "weight":"%G"
+                            "weight":"%G",
+                            "favouriteCounter":"%d"
                         }
-                        """, 
+                        """,
                 pokemonTypeCollection.ID().ID(),
                 pokemonTypeCollection.name().toString(),
                 pokemonTypeCollection.height().height(),
-                pokemonTypeCollection.weight().weight()
+                pokemonTypeCollection.weight().weight(),
+                pokemonTypeCollection.count().count()
         );
     }
 }

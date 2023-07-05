@@ -13,13 +13,11 @@ import java.net.http.HttpResponse;
 public class PokeApiPokemonDetailRepository implements PokemonDetailRepository {
 
     private String apiUrl = "https://pokeapi.co/api/v2/pokemon/";
+    private final FavouriteCountRepository favouriteCountRepository;
 
-     public PokeApiPokemonDetailRepository() {
+    public PokeApiPokemonDetailRepository(FavouriteCountRepository favouriteCountRepository) {
 
-    }
-
-    public PokeApiPokemonDetailRepository(String apiUrl) {
-        this.apiUrl = apiUrl;
+        this.favouriteCountRepository = favouriteCountRepository;
     }
 
     public PokemonDetail getById(PokemonID pokemonID) throws PokemonDetailRepositoryConnectionException, PokemonNotFoundException, PokemonIdOutOfRangeException, PokemonNameNotEmptyException, PokemonNegativeWeightException, PokemonNegativeHeightException {
@@ -45,7 +43,10 @@ public class PokeApiPokemonDetailRepository implements PokemonDetailRepository {
         PokemonName name = new PokemonName(obj.getString("name"));
         PokemonWeight weight = new PokemonWeight(obj.getDouble("weight"));
         PokemonHeight height = new PokemonHeight(obj.getDouble("height"));
-        return new PokemonDetail(ID, name, height, weight);
+
+        CountFavouritePokemon count = new CountFavouritePokemon(favouriteCountRepository.getById(ID));
+
+        return new PokemonDetail(ID, name, height, weight, count);
     }
 
     private HttpResponse<String> apiCall(PokemonID pokemonID) throws IOException, InterruptedException {
