@@ -2,10 +2,10 @@ package trainers.trainer.domain;
 
 import shared.DomainEvent;
 
-public class AddedFavouritePokemonEvent extends DomainEvent {
+public class FavouritePokemonRemovedEvent extends DomainEvent {
     String trainerID;
     int pokemonID;
-    AddedFavouritePokemonEvent(String trainerID, int pokemonID){
+    FavouritePokemonRemovedEvent(String trainerID, int pokemonID){
         super(trainerID);
         this.trainerID = trainerID;
         this.pokemonID = pokemonID;
@@ -13,6 +13,6 @@ public class AddedFavouritePokemonEvent extends DomainEvent {
 
     @Override
     public String type() {
-        return "trainer.favourite_pokemon_added";
+        return "trainer.favourite_pokemon_removed";
     }
 }

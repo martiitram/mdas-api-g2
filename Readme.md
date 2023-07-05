@@ -12,7 +12,12 @@ without the need of installing maven.
 You have the linux executable(mvnw) and the windows executable(mvnw.cmd). Just check you have execute permission set on these files to be able to run it.
 In the following sections you will see example commands made with the linux maven wrapper.
 
-## Testing
+## Unit Testing
+```
+./mvnw clean test
+```
+
+## all Testing
 ```
 ./mvnw clean verify
 ```

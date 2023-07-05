@@ -29,6 +29,7 @@ public class Trainer {
 
     public void removeFavouritePokemon(PokemonID pokemonID) throws PokemonNotExistInFavouritePokemonsException {
         favoritePokemons.removeFavouritePokemon(pokemonID);
+        events.add(new FavouritePokemonRemovedEvent(ID.ID(), pokemonID.ID()));
     }
 
     public boolean hasFavouritePokemon(PokemonID pokemonID) {
