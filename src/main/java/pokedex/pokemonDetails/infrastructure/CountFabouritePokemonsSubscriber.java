@@ -12,9 +12,18 @@ import trainers.trainer.domain.FavouritePokemonRemovedEvent;
 
 @Component
 public class CountFabouritePokemonsSubscriber {
+    private final FavouritePokemonCount useCase;
+
+    CountFabouritePokemonsSubscriber() {
+        useCase = new FavouritePokemonCount(new InMemoryFavouriteCountRepository());
+    }
+
+    public CountFabouritePokemonsSubscriber(FavouritePokemonCount useCase) {
+        this.useCase = useCase;
+    }
+
     @RabbitListener(queues = "trainer.favourite_pokemon_added")
     public void handleFavouritePokemonAddedMessage(String message) {
-        var useCase = new FavouritePokemonCount(new InMemoryFavouriteCountRepository());
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             FavouritePokemonAddedEvent event = objectMapper.readValue(message, FavouritePokemonAddedEvent.class);
@@ -29,7 +38,6 @@ public class CountFabouritePokemonsSubscriber {
 
     @RabbitListener(queues = "trainer.favourite_pokemon_removed")
     public void handleFavouritePokemonRemovedMessage(String message) {
-        var useCase = new FavouritePokemonCount(new InMemoryFavouriteCountRepository());
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             FavouritePokemonRemovedEvent event = objectMapper.readValue(message, FavouritePokemonRemovedEvent.class);
