@@ -1,5 +1,6 @@
 ## Prerequisites
 - Java SDK 17
+- docker-compose
 
 ## Stack used 
 - Java 17
@@ -11,6 +12,11 @@ without the need of installing maven.
 
 You have the linux executable(mvnw) and the windows executable(mvnw.cmd). Just check you have execute permission set on these files to be able to run it.
 In the following sections you will see example commands made with the linux maven wrapper.
+
+## Create the rabitMQ instance on docker
+```
+docker-compose up -d
+```
 
 ## Unit Testing
 ```
@@ -24,6 +30,8 @@ In the following sections you will see example commands made with the linux mave
 
 ## How to run
 There are to ways to execute this project, via terminal commands or a http request.
+
+
 
 ### Commands via terminal
 Follow this steps:
