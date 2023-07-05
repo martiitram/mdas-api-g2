@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+import shared.RabbitMQEventPublisher;
 import trainers.trainer.application.RemoveFavouritePokemon;
 import trainers.trainer.domain.exceptions.PokemonIdOutOfRangeException;
 import trainers.trainer.domain.exceptions.PokemonNotExistInFavouritePokemonsException;
@@ -16,7 +17,8 @@ public class RemoveFavouritePokemonToTrainerWithHttp {
     @GetMapping("RemoveFavouritePokemonToTrainer/{pokemonID}")
     public static void RemoveFavouritePokemonToTrainer(@RequestHeader("user_id") String trainerID, @PathVariable int pokemonID) {
         var trainerRepository = new InMemoryTrainerRepository();
-        var removeFavouritePokemon = new RemoveFavouritePokemon(trainerRepository);
+        var publisher = new RabbitMQEventPublisher();
+        var removeFavouritePokemon = new RemoveFavouritePokemon(trainerRepository, publisher);
         blankIdGuard(trainerID);
 
         try {

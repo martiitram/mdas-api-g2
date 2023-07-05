@@ -24,7 +24,7 @@ public class Trainer {
 
     public void addFavouritePokemon(PokemonID pokemonID) throws PokemonAlreadyExistInFavouritePokemonsException {
         favoritePokemons.addFavouritePokemon(pokemonID);
-        events.add(new AddedFavouritePokemonEvent(ID.ID(), pokemonID.ID()));
+        events.add(new FavouritePokemonAddedEvent(ID.ID(), pokemonID.ID()));
     }
 
     public void removeFavouritePokemon(PokemonID pokemonID) throws PokemonNotExistInFavouritePokemonsException {

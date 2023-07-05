@@ -2,10 +2,10 @@ package trainers.trainer.domain;
 
 import shared.DomainEvent;
 
-public class AddedFavouritePokemonEvent extends DomainEvent {
-    String trainerID;
-    int pokemonID;
-    AddedFavouritePokemonEvent(String trainerID, int pokemonID){
+public class FavouritePokemonAddedEvent extends DomainEvent {
+    public final String trainerID;
+    public final int pokemonID;
+    FavouritePokemonAddedEvent(String trainerID, int pokemonID){
         super(trainerID);
         this.trainerID = trainerID;
         this.pokemonID = pokemonID;

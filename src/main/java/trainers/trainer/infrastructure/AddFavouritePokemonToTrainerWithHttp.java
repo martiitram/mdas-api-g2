@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import shared.RabbitMQEventPublisher;
 import trainers.trainer.application.AddFavouritePokemon;
 import trainers.trainer.domain.exceptions.PokemonAlreadyExistInFavouritePokemonsException;
 import trainers.trainer.domain.exceptions.PokemonIdOutOfRangeException;
@@ -14,7 +15,8 @@ public class AddFavouritePokemonToTrainerWithHttp {
     @GetMapping("AddFavouritePokemonToTrainer/{pokemonID}")
     public ResponseEntity<String> AddFavouritePokemonToTrainer(@RequestHeader("user_id") String trainerID, @PathVariable int pokemonID) {
         var trainerRepository = new InMemoryTrainerRepository();
-        var addFavouritePokemon = new AddFavouritePokemon(trainerRepository);
+        var publisher = new RabbitMQEventPublisher();
+        var addFavouritePokemon = new AddFavouritePokemon(trainerRepository, publisher);
         blankIdGuard(trainerID);
 
         try {
