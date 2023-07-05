@@ -5,7 +5,7 @@ import shared.DomainEvent;
 public class FavouritePokemonRemovedEvent extends DomainEvent {
     String trainerID;
     int pokemonID;
-    FavouritePokemonRemovedEvent(String trainerID, int pokemonID){
+    public FavouritePokemonRemovedEvent(String trainerID, int pokemonID){
         super(trainerID);
         this.trainerID = trainerID;
         this.pokemonID = pokemonID;

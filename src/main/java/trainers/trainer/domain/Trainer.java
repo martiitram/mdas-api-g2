@@ -36,7 +36,7 @@ public class Trainer {
         return favoritePokemons.pokemonExist(pokemonID);
     }
 
-    ArrayList<DomainEvent> pullDomainEvents() {
+    public ArrayList<DomainEvent> pullDomainEvents() {
         var recordedEvents = events;
         events = new ArrayList<>();
         return recordedEvents;

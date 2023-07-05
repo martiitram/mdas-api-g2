@@ -34,6 +34,7 @@ public class RabbitMQEventPublisher implements EventPublisher {
             channel.queueDeclarePassive(queue_name);
             queueExists = true;
         } catch (IOException ex) {
+            ex.printStackTrace();
             // The queue does not exist, it will be declared later
         }
 
